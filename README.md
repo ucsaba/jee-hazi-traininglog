@@ -16,17 +16,21 @@ Használat
 ### Fordítás
 
 A jee könyvtárból:
+
     mvn clean install
 
 ### Futtatás
 
 A jee könyvtárból:
+
     mvn embedded-glassfish:run
 
 Ezután ezen az URL-en érhető el:
+
     http://localhost:8080/jee-web
 
 A kettő össze is vonható:
+
     mvn clean install && mvn embedded-glassfish:run
 
 Felépítés
