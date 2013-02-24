@@ -6,8 +6,8 @@ Ez a project a BME JavaEE tárgyának házifeladatához készült, hogy egy stab
 Szükséges szoftverek
 --------------------
 
-- Java 7
-- Maven, path-ba beállítva, hogy mvn paranccsal indítható legyen
+- Java 7 (ellenőrzés: java -version)
+- Maven 3, path-ba beállítva, hogy mvn paranccsal indítható legyen (ellenőrzés: mvn -version)
 - Internetkapcsolat
 
 Használat
