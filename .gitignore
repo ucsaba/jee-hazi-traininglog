@@ -1,4 +1,5 @@
 .swp
+target/
 jee-ear/.settings
 jee-ear/.project
 jee-ejb/.classpath
