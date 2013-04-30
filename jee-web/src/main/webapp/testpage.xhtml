@@ -11,6 +11,16 @@
     	   <h:commandButton value="Felvétel" action="#{testManagedBean.doTest}"></h:commandButton>
     	</h:form>
         <br/>Jelenleg ezek az elemek vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.testEntities}"/>
+		<br/>
+		<h:form>
+    	   Ide írva fel tudsz venni új küldeményt:
+		   <h:inputText value="#{testManagedBean.item}"></h:inputText>
+		   <h:inputText value="#{testManagedBean.sender}"></h:inputText>
+		   <h:inputText value="#{testManagedBean.receiver}"></h:inputText>
+		   <h:inputText value="#{testManagedBean.runner}"></h:inputText>
+    	   <h:commandButton value="Felvétel" action="#{testManagedBean.doDelivery}"></h:commandButton>
+    	</h:form>
+		<br/>Jelenleg ezek az elemek vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.deliveries}"/>
     </h:body>
 </html>
 
