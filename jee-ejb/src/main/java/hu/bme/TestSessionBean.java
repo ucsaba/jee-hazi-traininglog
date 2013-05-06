@@ -1,6 +1,7 @@
 package hu.bme;
 
-import hu.bme.entities.TestEntity;
+import hu.bme.entities.Customer;
+import hu.bme.entities.Runner;
 import hu.bme.entities.Delivery;
 import java.util.List;
 import javax.ejb.LocalBean;
@@ -17,7 +18,7 @@ public class TestSessionBean {
     EntityManager em;
     
    
-    public void addDelivery(String item, Long sender, Long receiver, Long runner){
+    public void addDelivery(String item, Customer sender, Customer receiver, Runner runner){
         Delivery d=new Delivery();
         d.setItem(item);
         d.setSender(sender);
@@ -30,14 +31,30 @@ public class TestSessionBean {
         return (List<Delivery>)em.createQuery("SELECT a FROM Delivery a").getResultList();
     }
 
-    public void addTestEntity(String data){
-        TestEntity te=new TestEntity();
-        te.setDataProperty(data);
-        em.persist(te);
+    public void addCustomer(String name, String addr, String tel){
+        Customer c= new Customer();
+        c.setName(name);
+        c.setAddr(addr);
+        c.setTel(tel);
+        em.persist(c);
     }
 
-    public List<TestEntity> getTestEntities(){
-        return (List<TestEntity>)em.createQuery("SELECT a FROM TestEntity a").getResultList();
+    public List<Customer> getCustomers(){
+        return (List<Customer>)em.createQuery("SELECT a FROM Customer a").getResultList();
+    }
+    
+    public void addRunner(String name, String uname, String pwd, String tel, Boolean dispatcher){
+        Runner r= new Runner();
+        r.setName(name);
+        r.setUname(uname);
+        r.setPwd(pwd);
+        r.setTel(tel);
+        r.setDispatcher(dispatcher);
+        em.persist(r);
+    }
+
+    public List<Runner> getRunners(){
+        return (List<Runner>)em.createQuery("SELECT a FROM Runner a").getResultList();
     }
 
 

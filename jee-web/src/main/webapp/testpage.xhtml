@@ -1,26 +1,41 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-      xmlns:h="http://java.sun.com/jsf/html">
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:p="http://primefaces.org/ui">
     <h:head>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
         <h:form>
-    	   Ide írva fel tudsz venni új elemet: <h:inputText value="#{testManagedBean.testProperty}"></h:inputText>
-    	   <h:commandButton value="Felvétel" action="#{testManagedBean.doTest}"></h:commandButton>
+    	   <h3>Új futár:</h3><br/>
+    	   Felhasználónév<h:inputText value="#{testManagedBean.uname}"/><br/>
+    	   Valódi név<h:inputText value="#{testManagedBean.name}"/><br/>
+    	   Jelszó<h:inputText value="#{testManagedBean.pwd}"/><br/>
+    	   Telefonszám<h:inputText value="#{testManagedBean.tel}"/><br/>
+    	   Diszpécser jogosultság<h:inputText value="#{testManagedBean.dispatcher}"/><br/>
+    	   <h:commandButton value="Felvétel" action="#{testManagedBean.doRunner}"/>
     	</h:form>
-        <br/>Jelenleg ezek az elemek vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.testEntities}"/>
+        <br/>Jelenleg ezek a futárok vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.runners}"/>
 		<br/>
 		<h:form>
-    	   Ide írva fel tudsz venni új küldeményt:
-		   <h:inputText value="#{testManagedBean.item}"></h:inputText>
-		   <h:inputText value="#{testManagedBean.sender}"></h:inputText>
-		   <h:inputText value="#{testManagedBean.receiver}"></h:inputText>
-		   <h:inputText value="#{testManagedBean.runner}"></h:inputText>
-    	   <h:commandButton value="Felvétel" action="#{testManagedBean.doDelivery}"></h:commandButton>
+    	   <h3>Új ügyfél:</h3><br/>
+    	   Név<h:inputText value="#{testManagedBean.name}"/><br/>
+    	   Telefonszám<h:inputText value="#{testManagedBean.tel}"/><br/>
+    	   Szállítási cím<h:inputText value="#{testManagedBean.addr}"/><br/>
+    	   <h:commandButton value="Felvétel" action="#{testManagedBean.doCustomer}" ajax="false"/>
     	</h:form>
-		<br/>Jelenleg ezek az elemek vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.deliveries}"/>
+        <br/>Jelenleg ezek az ügyfelek vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.customers}"/>
+		<br/>
+		<h:form>
+    	   <h3>Új küldemény:</h3><br/>
+		   Cikk neve<h:inputText value="#{testManagedBean.item}"/><br/>
+		   Küldő<h:inputText value="#{testManagedBean.sender}"/><br/>
+		   Fogadó<h:inputText value="#{testManagedBean.receiver}"/><br/>
+		   Futár<h:inputText value="#{testManagedBean.runner}"/><br/>
+    	   <h:commandButton value="Felvétel" action="#{testManagedBean.doDelivery}"/>
+    	</h:form>
+		<br/>Jelenleg ezek a küldemények vannak felvéve: <br/><h:outputText value="#{testManagedBean.testSessionBean.deliveries}"/>
     </h:body>
 </html>
 

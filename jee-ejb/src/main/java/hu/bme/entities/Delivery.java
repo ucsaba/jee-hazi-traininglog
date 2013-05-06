@@ -5,6 +5,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 @Entity
 public class Delivery implements Serializable {
@@ -14,54 +15,62 @@ public class Delivery implements Serializable {
     private Long id;
     
     private String item;
-    private Long sender;
-    private Long receiver;
-    private Long runner;
+    @ManyToOne
+    private Customer sender;
+    @ManyToOne
+    private Customer receiver;
+    @ManyToOne
+    private Runner runner;
 
+    
     public Long getId() {
-        return id;
-    }
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getItem() {
-        return item;
-    }
+	public String getItem() {
+		return item;
+	}
 
-    public void setItem(String item) {
-        this.item = item;
-    }
+	public void setItem(String item) {
+		this.item = item;
+	}
 
-    public void setSender(Long sender) {
-        this.sender = sender;
-    }
+	public Customer getSender() {
+		return sender;
+	}
 
-    public Long getReceiver() {
-        return receiver;
-    }
+	public void setSender(Customer sender) {
+		this.sender = sender;
+	}
 
-    public void setReceiver(Long receiver) {
-        this.receiver = receiver;
-    }
+	public Customer getReceiver() {
+		return receiver;
+	}
 
-    public Long getRunner() {
-        return runner;
-    }
+	public void setReceiver(Customer receiver) {
+		this.receiver = receiver;
+	}
 
-    public void setRunner(Long runner) {
-        this.runner = runner;
-    }
+	public Runner getRunner() {
+		return runner;
+	}
 
-    @Override
+	public void setRunner(Runner runner) {
+		this.runner = runner;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 7;
         hash = 19 * hash + (this.id != null ? this.id.hashCode() : 0);
-        hash = 19 * hash + (this.item != null ? this.item.hashCode() : 0);
+ /*     hash = 19 * hash + (this.item != null ? this.item.hashCode() : 0);
         hash = 19 * hash + (this.sender != null ? this.sender.hashCode() : 0);
         hash = 19 * hash + (this.receiver != null ? this.receiver.hashCode() : 0);
-        hash = 19 * hash + (this.runner != null ? this.runner.hashCode() : 0);
+        hash = 19 * hash + (this.runner != null ? this.runner.hashCode() : 0);*/
         return hash;
     }
 
@@ -84,10 +93,10 @@ public class Delivery implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "Delivery{" + "id=" + id + "item=" + item + ", sender=" + sender
-	+ ", receiver=" + receiver + ", runner=" + runner +  '}';
-    }
+	public String toString() {
+		return "Delivery [id=" + id + ", item=" + item + ", sender=" + sender
+				+ ", receiver=" + receiver + ", runner=" + runner + "]";
+	}
 
 
     

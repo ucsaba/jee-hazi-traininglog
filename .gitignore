@@ -1,4 +1,6 @@
 .swp
+derby.log
+.classpath
 target/
 .settings/
 .project
