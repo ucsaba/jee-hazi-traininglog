@@ -1,5 +1,7 @@
 package hu.bme;
 
+import java.lang.ProcessBuilder.Redirect;
+
 import hu.bme.entities.Customer;
 import hu.bme.entities.Runner;
 
@@ -24,7 +26,7 @@ public class TestManagedBean {
 	
 	private String uname;
 	private String pwd;
-	private Boolean dispatcher;
+	private String dispatcher;
 	
     public String getName() {
 		return name;
@@ -67,11 +69,11 @@ public class TestManagedBean {
 		this.pwd = pwd;
 	}
 
-	public Boolean getDispatcher() {
+	public String getDispatcher() {
 		return dispatcher;
 	}
 
-	public void setDispatcher(Boolean dispatcher) {
+	public void setDispatcher(String dispatcher) {
 		this.dispatcher = dispatcher;
 	}
 
@@ -88,16 +90,23 @@ public class TestManagedBean {
         testSessionBean.addCustomer(name, addr, tel);
         return null;
     }
+	
+	public void deleteCustomer(Customer c) {
+		testSessionBean.deleteCustomer(c);
+	}
 
-
+	public void toEditCustomer(Customer c) {
+//		Redirect redirect = Redirect.getInstance();
+//		redirect.setViewId("/xxx.xhtml");
+	}
+	
 //--------------------------------- Delivery -----------------------------------------------
     private String item;
-    private Customer sender;
-    private Customer receiver;
-    private Runner runner;
-    
+    private String deliverySender;
+    private String deliveryReceiver;
+    private String deliveryRunner;
 
-    public String getItem() {
+	public String getItem() {
 		return item;
 	}
 
@@ -105,32 +114,32 @@ public class TestManagedBean {
 		this.item = item;
 	}
 
-	public Customer getSender() {
-		return sender;
+	public String getDeliverySender() {
+		return deliverySender;
 	}
 
-	public void setSender(Customer sender) {
-		this.sender = sender;
+	public void setDeliverySender(String deliverySender) {
+		this.deliverySender = deliverySender;
 	}
 
-	public Customer getReceiver() {
-		return receiver;
+	public String getDeliveryReceiver() {
+		return deliveryReceiver;
 	}
 
-	public void setReceiver(Customer receiver) {
-		this.receiver = receiver;
+	public void setDeliveryReceiver(String deliveryReceiver) {
+		this.deliveryReceiver = deliveryReceiver;
 	}
 
-	public Runner getRunner() {
-		return runner;
+	public String getDeliveryRunner() {
+		return deliveryRunner;
 	}
 
-	public void setRunner(Runner runner) {
-		this.runner = runner;
+	public void setDeliveryRunner(String deliveryRunner) {
+		this.deliveryRunner = deliveryRunner;
 	}
-	
+
 	public String doDelivery(){
-        testSessionBean.addDelivery(item,sender,receiver,runner);
+        testSessionBean.addDelivery(item,deliverySender,deliveryReceiver,deliveryRunner);
         return null;
     }
 	
