@@ -1,89 +1,93 @@
 package hu.bme;
 
-import hu.bme.entities.Customer;
-import hu.bme.entities.Runner;
-import hu.bme.entities.Delivery;
+import hu.bme.entities.Lap;
+import hu.bme.entities.Person;
+import hu.bme.entities.Run;
+
 import java.util.List;
+
 import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-
 @Stateless
 @LocalBean
 public class TestSessionBean {
-    
-    @PersistenceContext
-    EntityManager em;
-    
-//---------------------------------------- Delivery ----------------------------------------   
-    public void addDelivery(String item, String senderID, String receiverID, String runnerID){
-    	Customer sender = em.find(Customer.class, Long.valueOf(senderID));
-    	Customer receiver = em.find(Customer.class, Long.valueOf(receiverID));
-    	Runner runner = em.find(Runner.class, Long.valueOf(runnerID));
-    	
-    	Delivery d=new Delivery();
-        d.setItem(item);
-        d.setSender(sender);
-        d.setReceiver(receiver);
-        d.setRunner(runner);
-        em.persist(d);
-    }
 
-    public List<Delivery> getDeliveries(){
-        return (List<Delivery>)em.createQuery("SELECT a FROM Delivery a").getResultList();
-    }
-    
-    public void deleteDelivery(Delivery d) {
-		d = em.merge(d);
-		em.remove(d);
-	}
-    
-    public Delivery saveDelivery(Delivery d) {
-		em.persist(d);
-		return d;
-	}
-//---------------------------------------- Customer ----------------------------------------
-    public void addCustomer(String name, String addr, String tel){
-        Customer c= new Customer();
-        c.setName(name);
-        c.setAddr(addr);
-        c.setTel(tel);
-        em.persist(c);
-    }
+	@PersistenceContext
+	EntityManager em;
 
-    public List<Customer> getCustomers(){
-        return (List<Customer>)em.createQuery("SELECT a FROM Customer a").getResultList();
-    }
-    
-    public void deleteCustomer(Customer c) {
-		c = em.merge(c);
-		em.remove(c);
+	// ------ Person ------
+	public void addPerson(String name) {
+		Person p = new Person();
+		p.setName(name);
+		p.setRuns(null);
+		em.persist(p);
 	}
-    
-    public Customer saveCustomer(Customer c) {
-		em.persist(c);
-		return c;
+
+	public List<Person> getPersons() {
+		return (List<Person>) em.createQuery("SELECT a FROM Person a")
+				.getResultList();
 	}
-//---------------------------------------- Runner ----------------------------------------    
-    public void addRunner(String name, String uname, String pwd, String tel, String dispatcher){
-        Runner r= new Runner();
-        r.setName(name);
-        r.setUname(uname);
-        r.setPwd(pwd);
-        r.setTel(tel);
-        r.setDispatcher(Boolean.valueOf(dispatcher));
-        em.persist(r);
-    }
 
-    public List<Runner> getRunners(){
-        return (List<Runner>)em.createQuery("SELECT a FROM Runner a").getResultList();
-    }
+	public void deletePerson(Person p) {
+		p = em.merge(p);
+		em.remove(p);
+	}
 
-    public void deleteRunner(Runner r) {
+	public Person savePerson(Person p) {
+		em.persist(p);
+		return p;
+	}
+
+	// ------ Run ------
+	public void addRun(String personId, String type, String date) {
+		Run r = new Run();
+		r.setPersonId(Long.parseLong(personId));
+		r.setType(type);
+		r.setDate(date);
+		r.setLaps(null);
+		em.persist(r);
+	}
+
+	public List<Run> getRuns() {
+		return (List<Run>) em.createQuery("SELECT a FROM Run a")
+				.getResultList();
+	}
+
+	public void deleteRun(Run r) {
 		r = em.merge(r);
 		em.remove(r);
 	}
-    
+
+	public Run saveRun(Run r) {
+		em.persist(r);
+		return r;
+	}
+
+	// ------ Lap ------
+	public void addLap(String number, String distance, String time) {
+		Lap l = new Lap();
+		l.setNumber(Integer.parseInt(number));
+		l.setDistanceM(Integer.parseInt(distance));
+		l.setTimeS(Integer.parseInt(time));
+		em.persist(l);
+	}
+
+	public List<Lap> getLaps() {
+		return (List<Lap>) em.createQuery("SELECT a FROM Lap a")
+				.getResultList();
+	}
+
+	public void deleteLap(Lap l) {
+		l = em.merge(l);
+		em.remove(l);
+	}
+
+	public Lap saveLap(Lap l) {
+		em.persist(l);
+		return l;
+	}
+
 }

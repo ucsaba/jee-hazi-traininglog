@@ -1,8 +1,12 @@
 package hu.bme;
 
-import hu.bme.entities.Customer;
-import hu.bme.entities.Runner;
-import hu.bme.entities.Delivery;
+import hu.bme.entities.Lap;
+import hu.bme.entities.Person;
+import hu.bme.entities.Run;
+
+import java.util.ArrayList;
+import java.util.Arrays;
+
 import javax.annotation.PostConstruct;
 import javax.ejb.Singleton;
 import javax.ejb.Startup;
@@ -18,29 +22,35 @@ public class StartupListener {
 
 	@PostConstruct
 	public void onStartup() {
-		if (em.createQuery("SELECT a FROM Delivery a").setMaxResults(1)
+		if (em.createQuery("SELECT a FROM Person a").setMaxResults(1)
 				.getResultList().isEmpty()) {
 
-			Customer c = new Customer();
-			c.setAddr("Csalogany 32");
-			c.setName("Jozsi");
-			em.persist(c);
+			Person p1 = new Person();
+			p1.setName("person1");
+			em.persist(p1);
 
-			Customer c2 = new Customer();
-			c2.setName("Zsuzsa");
+			// Person p2 = new Person();
+			// p2.setName("person2");
+			// em.persist(p2);
 
-			Runner r = new Runner();
-			r.setName("Futár");
+			Lap l1 = new Lap();
+			l1.setNumber(1);
+			l1.setDistanceM(3000);
+			l1.setTimeS(900);
 
-			Delivery d = new Delivery();
+			Lap l2 = new Lap();
+			l2.setNumber(2);
+			l2.setDistanceM(2500);
+			l2.setTimeS(700);
 
-			d.setItem("Stuff");
-			d.setRunner(r);
-			d.setReceiver(c);
-			d.setSender(c2);
-			em.persist(d);
-			em.persist(c);
-			em.persist(c2);
+			Run r = new Run();
+			r.setId(p1.getId());
+			r.setDate("2013-05-07");
+			r.setType("longrun");
+			r.setLaps(new ArrayList<Lap>(Arrays.asList(l1, l2)));
+
+			em.persist(l1);
+			em.persist(l2);
 			em.persist(r);
 		}
 	}

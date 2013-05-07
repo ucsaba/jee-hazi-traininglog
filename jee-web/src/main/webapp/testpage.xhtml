@@ -5,82 +5,37 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>FutárEE</title>
+	<title>Training logs</title>
 </h:head>
 <h:body>
 	<h:form>
-		<h3>Új futár:</h3>
+		<h3>New person:</h3>
 		<br />
-    	   Felhasználónév<h:inputText value="#{testManagedBean.uname}" />
+    	   Name:<h:inputText value="#{testManagedBean.name}" />
 		<br />
-    	   Valódi név<h:inputText value="#{testManagedBean.name}" />
-		<br />
-    	   Jelszó<h:inputText value="#{testManagedBean.pwd}" />
-		<br />
-    	   Telefonszám<h:inputText value="#{testManagedBean.tel}" />
-		<br />
-    	   Diszpécser jogosultság
-    	   <h:selectOneMenu value="#{testManagedBean.dispatcher}">
-			<f:selectItem itemValue="false" itemLabel="Nem" />
-			<f:selectItem itemValue="true" itemLabel="Igen" />
-		</h:selectOneMenu>
-		<br />
-		<h:commandButton value="Felvétel" action="#{testManagedBean.doRunner}" />
+		<h:commandButton value="Submit" action="#{testManagedBean.doPerson}" />
 	</h:form>
-	<br /><h3>Jelenleg ezek a futárok vannak felvéve:</h3>
+	<br /><h3>Persons:</h3>
 	<br />
-	<h:outputText value="#{testManagedBean.testSessionBean.runners}" />
+	<h:outputText value="#{testManagedBean.testSessionBean.persons}" />
 	<br />
 	<h:form>
-		<h3>Új ügyfél:</h3>
+		<h3>New run:</h3>
 		<br />
-    	   Név<h:inputText value="#{testManagedBean.name}" />
+    	   PersonId:<h:inputText value="#{testManagedBean.personId}" />
 		<br />
-    	   Telefonszám<h:inputText value="#{testManagedBean.tel}" />
+    	   Type:<h:inputText value="#{testManagedBean.type}" />
 		<br />
-    	   Szállítási cím<h:inputText value="#{testManagedBean.addr}" />
+    	   Date:<h:inputText value="#{testManagedBean.date}" />
 		<br />
-		<h:commandButton value="Felvétel"
-			action="#{testManagedBean.doCustomer}" ajax="false" />
+		<h:commandButton value="Submit"
+			action="#{testManagedBean.doRun}" ajax="false" />
 	</h:form>
 	<br />
-	<h3>Jelenleg ezek az ügyfelek vannak felvéve:</h3>
+	<h3>Runs:</h3>
 	<br />
-	<h:outputText value="#{testManagedBean.testSessionBean.customers}" />
+	<h:outputText value="#{testManagedBean.testSessionBean.runs}" />
 	<br />
-	<h:form>
-		<h3>Új küldemény:</h3>
-		<br />
-		   Cikk neve<h:inputText value="#{testManagedBean.item}" />
-		<br />
-		   Küldő
-		   	<h:selectOneMenu value="#{testManagedBean.deliverySender}">
-			<f:selectItems itemValue="#{customer.id}"
-				itemLabel="#{customer.name}"
-				value="#{testManagedBean.testSessionBean.customers}" var="customer" />
-		</h:selectOneMenu>
-		<br />
-		   Fogadó
-		   	<h:selectOneMenu value="#{testManagedBean.deliveryReceiver}">
-			<f:selectItems itemValue="#{customer.id}"
-				itemLabel="#{customer.name}"
-				value="#{testManagedBean.testSessionBean.customers}" var="customer" />
-		</h:selectOneMenu>
-		<br />
-		   Futár
-		   	<h:selectOneMenu value="#{testManagedBean.deliveryRunner}">
-			<f:selectItems itemValue="#{runner.id}"
-				itemLabel="#{runner.name}"
-				value="#{testManagedBean.testSessionBean.runners}" var="runner" />
-		</h:selectOneMenu>
-		<br />
-		<h:commandButton value="Felvétel"
-			action="#{testManagedBean.doDelivery}" />
-	</h:form>
-	<br/>
-	<h3>Jelenleg ezek a küldemények vannak felvéve:</h3>
-	<br />
-	<h:outputText value="#{testManagedBean.testSessionBean.deliveries}" />
 </h:body>
 </html>
 
