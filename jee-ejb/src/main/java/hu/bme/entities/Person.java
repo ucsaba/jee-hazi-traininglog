@@ -4,6 +4,7 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
@@ -24,7 +25,7 @@ public class Person implements Serializable {
 	@Getter @Setter private Long id;
 	@Getter @Setter private String name;
 
-	@OneToMany
+	@OneToMany(mappedBy="person")
 	@Getter @Setter private Collection<Run> runs;
 
 }

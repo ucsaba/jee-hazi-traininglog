@@ -4,6 +4,8 @@ import hu.bme.entities.Lap;
 import hu.bme.entities.Person;
 import hu.bme.entities.Run;
 
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -42,12 +44,30 @@ public class TestSessionBean {
 	}
 
 	// ------ Run ------
-	public void addRun(String personId, String type, String date) {
+	public void addRun(String personId, String type, String date,
+			Collection<String> lapIds) {
+
 		Run r = new Run();
-		r.setPersonId(Long.parseLong(personId));
+		
+		Person person = em.find(Person.class, Long.parseLong(personId));
+		// Collection<Run> runs = person.getRuns();
+		// runs.add(r);
+		// person.setRuns(runs);
+		
+		r.setPerson(person);
 		r.setType(type);
 		r.setDate(date);
-		r.setLaps(null);
+		
+		List<Lap> chosenLaps = new ArrayList<Lap>();
+		for (String id : lapIds) {
+			Lap l = em.find(Lap.class, Long.parseLong(id));
+			//l.setRun(r);
+			chosenLaps.add(l);
+		}
+		System.out.println(chosenLaps);
+
+		r.setLaps(chosenLaps);
+		
 		em.persist(r);
 	}
 

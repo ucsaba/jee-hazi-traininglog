@@ -6,6 +6,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -20,9 +21,10 @@ public class Lap implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter private Long id;
-    //@Getter @Setter private Long runId;
     @Getter @Setter private Integer number;
     @Getter @Setter private Integer distanceM;
     @Getter @Setter private Integer timeS;
-    
+
+    @ManyToOne
+    @Getter @Setter private Run run;
 }

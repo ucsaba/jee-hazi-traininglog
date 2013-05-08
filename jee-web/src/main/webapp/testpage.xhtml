@@ -8,34 +8,94 @@
 	<title>Training logs</title>
 </h:head>
 <h:body>
+	<h:dataTable value="#{testManagedBean.testSessionBean.runs}" var="run">
+		<h:column>
+			<f:facet name="header">id</f:facet>    				
+      #{run.id}
+   </h:column>
+		<h:column>
+			<f:facet name="header">type</f:facet>
+      #{run.type}
+   </h:column>
+		<h:column>
+			<f:facet name="header">date</f:facet>
+      #{run.date}
+   </h:column>
+		<h:column>
+			<f:facet name="header">laps</f:facet>
+			<h:dataTable value="#{run.laps}" var="lap">
+				<h:column>
+					<f:facet name="header">id</f:facet>    				
+			      #{lap.id}
+			   </h:column>
+				<h:column>
+					<f:facet name="header">number</f:facet>
+			      #{lap.number}
+			   </h:column>
+				<h:column>
+					<f:facet name="header">distance</f:facet>
+				      #{lap.distanceM}
+				   </h:column>
+				<h:column>
+					<f:facet name="header">time</f:facet>
+			      #{lap.timeS}
+			   </h:column>
+			</h:dataTable>
+
+		</h:column>
+	</h:dataTable>
+
 	<h:form>
 		<h3>New person:</h3>
-		<br />
     	   Name:<h:inputText value="#{testManagedBean.name}" />
 		<br />
 		<h:commandButton value="Submit" action="#{testManagedBean.doPerson}" />
 	</h:form>
-	<br /><h3>Persons:</h3>
 	<br />
+	<h3>Persons:</h3>
 	<h:outputText value="#{testManagedBean.testSessionBean.persons}" />
 	<br />
+
+	<h:form>
+		<h3>New lap:</h3>
+    	   Number: <h:inputText value="#{testManagedBean.number}" />
+		<br />
+    	   Distance: <h:inputText value="#{testManagedBean.distance}" />
+		<br />
+    	   Time:<h:inputText value="#{testManagedBean.time}" />
+		<br />
+		<h:commandButton value="Submit" action="#{testManagedBean.doLap}"
+			ajax="false" />
+	</h:form>
+	<h3>Laps:</h3>
+	<h:outputText value="#{testManagedBean.testSessionBean.laps}" />
+	<br />
+
 	<h:form>
 		<h3>New run:</h3>
-		<br />
-    	   PersonId:<h:inputText value="#{testManagedBean.personId}" />
+    	Person: 
+    	<h:selectOneMenu value="#{testManagedBean.personId}">
+			<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
+				value="#{testManagedBean.testSessionBean.persons}" var="person" />
+		</h:selectOneMenu>
 		<br />
     	   Type:<h:inputText value="#{testManagedBean.type}" />
 		<br />
     	   Date:<h:inputText value="#{testManagedBean.date}" />
 		<br />
-		<h:commandButton value="Submit"
-			action="#{testManagedBean.doRun}" ajax="false" />
+		Laps: 
+		<h:selectManyMenu value="#{testManagedBean.chosenLaps}">
+			<f:selectItems itemValue="#{lap.id}" itemLabel="#{lap.id}"
+				value="#{testManagedBean.testSessionBean.laps}" var="lap" />
+		</h:selectManyMenu>
+		<br />
+		<h:commandButton value="Submit" action="#{testManagedBean.doRun}"
+			ajax="false" />
 	</h:form>
 	<br />
 	<h3>Runs:</h3>
-	<br />
 	<h:outputText value="#{testManagedBean.testSessionBean.runs}" />
-	<br />
+
 </h:body>
 </html>
 

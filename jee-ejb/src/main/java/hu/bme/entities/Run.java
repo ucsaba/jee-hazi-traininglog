@@ -4,9 +4,11 @@ import java.io.Serializable;
 import java.util.Collection;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 import lombok.EqualsAndHashCode;
@@ -22,11 +24,13 @@ public class Run implements Serializable {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Getter @Setter private Long id;
-	@Getter @Setter private Long personId;
 	@Getter @Setter private String type;
 	@Getter @Setter private String date;
 
-	@OneToMany
+	@ManyToOne
+	@Getter @Setter private Person person;
+	
+	@OneToMany(mappedBy="run")
 	@Getter @Setter private Collection<Lap> laps;
 
 }
