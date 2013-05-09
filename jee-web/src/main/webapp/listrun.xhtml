@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:outputStylesheet library="css" name="style.css" />
+<h:head>
+	<title>Training logs</title>
+</h:head>
+<h:body>
+	<h:form>
+		<h3>Person:</h3>
+    	<h:selectOneMenu id="selectedPerson" value="#{testManagedBean.personId}">
+			<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
+				value="#{testManagedBean.testSessionBean.persons}" var="person" />
+		</h:selectOneMenu>
+		<h:commandButton value="Submit">
+			<f:ajax execute="selectedPerson" render="runTable" />
+		</h:commandButton>
+		
+		<h3>Runs:</h3>
+		<h:dataTable id="runTable" value="#{testManagedBean.getRunsByPersonId()}" var="run"
+			styleClass="Table" headerClass="TableHeader"
+			rowClasses="TableOddRow,TableEvenRow">
+			<h:column>
+				<f:facet name="header">id</f:facet>    				
+      			#{run.id}
+	   		</h:column>
+			<h:column>
+				<f:facet name="header">type</f:facet>
+	      		#{run.type}
+	   		</h:column>
+			<h:column>
+				<f:facet name="header">date</f:facet>
+	     		#{run.date}
+	   		</h:column>
+			<h:column>
+				<f:facet name="header">laps</f:facet>
+				<h:dataTable value="#{run.laps}" var="lap" styleClass="Table"
+					headerClass="TableHeader" rowClasses="TableOddRow,TableEvenRow">
+					<h:column>
+						<f:facet name="header">id</f:facet>    				
+				     	#{lap.id}
+				  	</h:column>
+					<h:column>
+						<f:facet name="header">number</f:facet>
+				     	#{lap.number}
+				  	</h:column>
+					<h:column>
+						<f:facet name="header">distance</f:facet>
+				    	#{lap.distanceM}
+					</h:column>
+					<h:column>
+						<f:facet name="header">time</f:facet>
+				     	#{lap.timeS}
+				   	</h:column>
+				</h:dataTable>
+			</h:column>
+			<h:column>
+				<a href="./editrun.xhtml">edit</a>
+			</h:column>
+		</h:dataTable>
+
+	</h:form>
+</h:body>
+</html>

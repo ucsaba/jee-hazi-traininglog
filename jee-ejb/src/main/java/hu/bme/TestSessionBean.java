@@ -6,6 +6,7 @@ import hu.bme.entities.Run;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -73,6 +74,11 @@ public class TestSessionBean {
 
 	public List<Run> getRuns() {
 		return (List<Run>) em.createQuery("SELECT a FROM Run a")
+				.getResultList();
+	}
+	
+	public List<Run> getRunsByPersonId(String personId) {
+		return (List<Run>) em.createQuery("SELECT a FROM Run a WHERE a.person.id="+personId)
 				.getResultList();
 	}
 

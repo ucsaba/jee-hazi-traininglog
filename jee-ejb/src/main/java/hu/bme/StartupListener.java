@@ -45,6 +45,7 @@ public class StartupListener {
 
 			Run r = new Run();
 			r.setId(p1.getId());
+			r.setPerson(p1);
 			r.setDate("2013-05-07");
 			r.setType("longrun");
 			r.setLaps(new ArrayList<Lap>(Arrays.asList(l1, l2)));

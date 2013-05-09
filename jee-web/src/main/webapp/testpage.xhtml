@@ -4,42 +4,46 @@
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
+<h:outputStylesheet library="css" name="style.css" />
 <h:head>
 	<title>Training logs</title>
 </h:head>
 <h:body>
-	<h:dataTable value="#{testManagedBean.testSessionBean.runs}" var="run">
+	<h:dataTable value="#{testManagedBean.testSessionBean.runs}" var="run"
+		styleClass="Table" headerClass="TableHeader"
+		rowClasses="TableOddRow,TableEvenRow">
 		<h:column>
 			<f:facet name="header">id</f:facet>    				
-      #{run.id}
-   </h:column>
+      		#{run.id}
+   		</h:column>
 		<h:column>
 			<f:facet name="header">type</f:facet>
-      #{run.type}
-   </h:column>
+      		#{run.type}
+   		</h:column>
 		<h:column>
 			<f:facet name="header">date</f:facet>
-      #{run.date}
-   </h:column>
+     		#{run.date}
+   		</h:column>
 		<h:column>
 			<f:facet name="header">laps</f:facet>
-			<h:dataTable value="#{run.laps}" var="lap">
+			<h:dataTable value="#{run.laps}" var="lap" styleClass="Table"
+				headerClass="TableHeader" rowClasses="TableOddRow,TableEvenRow">
 				<h:column>
 					<f:facet name="header">id</f:facet>    				
-			      #{lap.id}
-			   </h:column>
+			      	#{lap.id}
+			   	</h:column>
 				<h:column>
 					<f:facet name="header">number</f:facet>
-			      #{lap.number}
-			   </h:column>
+			      	#{lap.number}
+			   	</h:column>
 				<h:column>
 					<f:facet name="header">distance</f:facet>
-				      #{lap.distanceM}
-				   </h:column>
+				    #{lap.distanceM}
+				</h:column>
 				<h:column>
 					<f:facet name="header">time</f:facet>
-			      #{lap.timeS}
-			   </h:column>
+			      	#{lap.timeS}
+			   	</h:column>
 			</h:dataTable>
 
 		</h:column>
