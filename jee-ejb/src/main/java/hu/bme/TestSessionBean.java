@@ -6,7 +6,6 @@ import hu.bme.entities.Run;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 import javax.ejb.LocalBean;
@@ -25,13 +24,20 @@ public class TestSessionBean {
 	public void addPerson(String name) {
 		Person p = new Person();
 		p.setName(name);
-		p.setRuns(null);
 		em.persist(p);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Person> getPersons() {
 		return (List<Person>) em.createQuery("SELECT a FROM Person a")
 				.getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public Person getPerson(String personId) {
+		return ((List<Person>) em
+				.createQuery("SELECT a FROM Person a WHERE a.id=" + personId)
+				.setMaxResults(1).getResultList()).get(0);
 	}
 
 	public void deletePerson(Person p) {
@@ -47,39 +53,33 @@ public class TestSessionBean {
 	// ------ Run ------
 	public void addRun(String personId, String type, String date,
 			Collection<String> lapIds) {
+		Person person = em.find(Person.class, Long.parseLong(personId));
 
 		Run r = new Run();
-		
-		Person person = em.find(Person.class, Long.parseLong(personId));
-		// Collection<Run> runs = person.getRuns();
-		// runs.add(r);
-		// person.setRuns(runs);
-		
 		r.setPerson(person);
 		r.setType(type);
 		r.setDate(date);
-		
+
 		List<Lap> chosenLaps = new ArrayList<Lap>();
 		for (String id : lapIds) {
 			Lap l = em.find(Lap.class, Long.parseLong(id));
-			//l.setRun(r);
+			l.setRun(r);
 			chosenLaps.add(l);
 		}
-		System.out.println(chosenLaps);
 
 		r.setLaps(chosenLaps);
-		
 		em.persist(r);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Run> getRuns() {
 		return (List<Run>) em.createQuery("SELECT a FROM Run a")
 				.getResultList();
 	}
-	
+
 	public List<Run> getRunsByPersonId(String personId) {
-		return (List<Run>) em.createQuery("SELECT a FROM Run a WHERE a.person.id="+personId)
-				.getResultList();
+		Person person = em.find(Person.class, Long.parseLong(personId));
+		return (List<Run>) person.getRuns();
 	}
 
 	public void deleteRun(Run r) {
@@ -101,9 +101,16 @@ public class TestSessionBean {
 		em.persist(l);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Lap> getLaps() {
-		return (List<Lap>) em.createQuery("SELECT a FROM Lap a")
-				.getResultList();
+		return (List<Lap>) em.createQuery(
+				"SELECT a FROM Lap a WHERE a.run IS NULL").getResultList();
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Lap> getOrphanLaps() {
+		return (List<Lap>) em.createQuery(
+				"SELECT a FROM Lap a WHERE a.run IS NULL").getResultList();
 	}
 
 	public void deleteLap(Lap l) {

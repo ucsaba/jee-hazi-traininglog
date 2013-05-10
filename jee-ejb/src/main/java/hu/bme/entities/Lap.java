@@ -8,12 +8,10 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 
-import lombok.EqualsAndHashCode;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
 
-@EqualsAndHashCode
 @ToString
 @Entity
 public class Lap implements Serializable {
@@ -26,5 +24,57 @@ public class Lap implements Serializable {
     @Getter @Setter private Integer timeS;
 
     @ManyToOne
-    @Getter @Setter private Run run;
+    @Getter private Run run;
+
+    public void setRun(Run run) {
+		this.run = run;
+        if (run.getLaps() != null && !run.getLaps().contains(this)) {
+        	run.getLaps().add(this);
+        }
+	}
+    
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result
+				+ ((distanceM == null) ? 0 : distanceM.hashCode());
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((number == null) ? 0 : number.hashCode());
+		result = prime * result + ((timeS == null) ? 0 : timeS.hashCode());
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Lap other = (Lap) obj;
+		if (distanceM == null) {
+			if (other.distanceM != null)
+				return false;
+		} else if (!distanceM.equals(other.distanceM))
+			return false;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		if (number == null) {
+			if (other.number != null)
+				return false;
+		} else if (!number.equals(other.number))
+			return false;
+		if (timeS == null) {
+			if (other.timeS != null)
+				return false;
+		} else if (!timeS.equals(other.timeS))
+			return false;
+		return true;
+	}
+    
 }

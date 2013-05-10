@@ -27,7 +27,7 @@ public class StartupListener {
 
 			Person p1 = new Person();
 			p1.setName("person1");
-			em.persist(p1);
+			
 
 			// Person p2 = new Person();
 			// p2.setName("person2");
@@ -49,10 +49,11 @@ public class StartupListener {
 			r.setDate("2013-05-07");
 			r.setType("longrun");
 			r.setLaps(new ArrayList<Lap>(Arrays.asList(l1, l2)));
-
+			
 			em.persist(l1);
 			em.persist(l2);
 			em.persist(r);
+			em.persist(p1);
 		}
 	}
 }

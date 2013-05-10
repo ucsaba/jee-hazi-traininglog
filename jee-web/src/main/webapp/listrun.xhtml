@@ -11,17 +11,27 @@
 </h:head>
 <h:body>
 	<h:form>
+		<h:messages globalOnly="true" styleClass="Message" />
 		<h3>Person:</h3>
-    	<h:selectOneMenu id="selectedPerson" value="#{testManagedBean.personId}">
-			<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
-				value="#{testManagedBean.testSessionBean.persons}" var="person" />
-		</h:selectOneMenu>
-		<h:commandButton value="Submit">
-			<f:ajax execute="selectedPerson" render="runTable" />
-		</h:commandButton>
-		
+		<table>
+			<tr>
+				<td><h:selectOneMenu id="selectedPerson"
+						value="#{testManagedBean.personId}">
+						<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
+							value="#{testManagedBean.testSessionBean.persons}" var="person" />
+					</h:selectOneMenu> <h:commandButton value="Submit">
+						<f:ajax execute="selectedPerson" render="runTable" />
+					</h:commandButton></td>
+				<td>New person: <br /> Name:<h:inputText
+						value="#{testManagedBean.name}" /> <h:commandButton
+						value="Submit" action="#{testManagedBean.doPerson}" />
+				</td>
+			</tr>
+		</table>
+
 		<h3>Runs:</h3>
-		<h:dataTable id="runTable" value="#{testManagedBean.getRunsByPersonId()}" var="run"
+		<h:dataTable id="runTable"
+			value="#{testManagedBean.getRunsByPersonId()}" var="run"
 			styleClass="Table" headerClass="TableHeader"
 			rowClasses="TableOddRow,TableEvenRow">
 			<h:column>
@@ -62,7 +72,46 @@
 				<a href="./editrun.xhtml">edit</a>
 			</h:column>
 		</h:dataTable>
-
+		<h3>Add run</h3>
+		<hr />
+		<table>
+			<tr>
+				<td>Person:</td>
+				<td><h:selectOneMenu value="#{testManagedBean.personId}">
+						<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
+							value="#{testManagedBean.testSessionBean.persons}" var="person" />
+					</h:selectOneMenu></td>
+			</tr>
+			<tr>
+				<td>Type:</td>
+				<td><h:inputText size="20" value="#{testManagedBean.type}" /></td>
+			</tr>
+			<tr>
+				<td>Date:</td>
+				<td><h:inputText size="5" value="#{testManagedBean.date}" /></td>
+			</tr>
+			<tr>
+				<td>Laps:</td>
+				<td><h:selectManyMenu value="#{testManagedBean.chosenLaps}">
+						<f:selectItems itemValue="#{lap.id}" itemLabel="#{lap.id}"
+							value="#{testManagedBean.testSessionBean.getOrphanLaps()}"
+							var="lap" />
+					</h:selectManyMenu></td>
+				<td>New lap:</td>
+				<td>Number: <h:inputText value="#{testManagedBean.number}" />
+					<br /> Distance: <h:inputText value="#{testManagedBean.distance}" />
+					<br /> Time:<h:inputText value="#{testManagedBean.time}" /> <br />
+					<h:commandButton value="Submit" action="#{testManagedBean.doLap}"
+						ajax="false" />
+				</td>
+			</tr>
+			<tr>
+				<td></td>
+				<td><h:commandButton value="Add run"
+						action="#{testManagedBean.doRun}" /></td>
+			</tr>
+		</table>
+		<h:messages globalOnly="true" styleClass="Message" />
 	</h:form>
 </h:body>
 </html>
