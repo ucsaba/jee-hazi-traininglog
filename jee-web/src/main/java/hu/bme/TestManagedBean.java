@@ -1,9 +1,10 @@
 package hu.bme;
 
-import hu.bme.entities.Person;
 import hu.bme.entities.Run;
 
 import java.io.Serializable;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 import javax.ejb.EJB;
@@ -40,44 +41,52 @@ public class TestManagedBean implements Serializable {
 	@Getter	@Setter	private String time;
 
 	public Collection<Run> getRunsByPersonId() {
-		if (personId == null)
-			return null;
-		return testSessionBean.getRunsByPersonId(personId);
+		if (personId != null) {
+			return testSessionBean.getRunsByPersonId(personId);
+		}
+		return null;
 	}
 
 	public String doPerson() {
-		if (name == null || name.isEmpty())
+		if (name == null || name.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Name is null or empty", null));
-		else
+		}
+		else {
 			testSessionBean.addPerson(name);
+		}
 		return null;
 	}
 
 	public String doRun() {
-		if (chosenLaps.size() == 0)
+		if (chosenLaps.size() == 0) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No free laps, create at least one", null));
-		else if (type.isEmpty() || date.isEmpty())
+		}
+		else if (type.isEmpty() || date.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Some \"New run\" fields are empty", null));
-		else
-			testSessionBean.addRun(personId, type, date, chosenLaps);
+		}
+		else {
+			SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+			try {
+				df.parse(date);
+				testSessionBean.addRun(personId, type, date, chosenLaps);
+				
+				getRunsByPersonId();
+				
+			} catch (ParseException e) {
+				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Invalid date format. Valid format: yyyy-mm-dd", null));
+			}
+		}
 		return null;
 	}
 
 	public String doLap() {
-		if (number.isEmpty() || distance.isEmpty() || time.isEmpty())
+		if (number.isEmpty() || distance.isEmpty() || time.isEmpty()) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Some \"New lap\" fields are empty", null));
-		else
+		}
+		else {
 			testSessionBean.addLap(number, distance, time);
+		}
 		return null;
 	}
-
-	public void deletePerson(Person p) {
-		testSessionBean.deletePerson(p);
-	}
-
-	public void toEditPerson(Person p) {
-		// Redirect redirect = Redirect.getInstance();
-		// redirect.setViewId("/xxx.xhtml");
-	}
-
+	
 }

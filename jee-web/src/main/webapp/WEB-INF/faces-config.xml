@@ -12,8 +12,26 @@
         <navigation-rule>
                 <from-view-id>/listrun.xhtml</from-view-id>
                 <navigation-case>
-                        <from-outcome>create</from-outcome>
-                        <to-view-id>/newrun.xhtml</to-view-id>
+                        <from-outcome>editRun</from-outcome>
+                        <to-view-id>/editrun.xhtml</to-view-id>
+                </navigation-case>
+                <navigation-case>
+                        <from-outcome>editLap</from-outcome>
+                        <to-view-id>/editlap.xhtml</to-view-id>
+                </navigation-case>
+        </navigation-rule>
+        <navigation-rule>
+                <from-view-id>/editrun.xhtml</from-view-id>
+                <navigation-case>
+                        <from-outcome>edited</from-outcome>
+                        <to-view-id>/listrun.xhtml</to-view-id>
+                </navigation-case>
+        </navigation-rule>
+        <navigation-rule>
+                <from-view-id>/editlap.xhtml</from-view-id>
+                <navigation-case>
+                        <from-outcome>edited</from-outcome>
+                        <to-view-id>/listrun.xhtml</to-view-id>
                 </navigation-case>
         </navigation-rule>
 </faces-config>

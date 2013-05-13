@@ -45,11 +45,6 @@ public class TestSessionBean {
 		em.remove(p);
 	}
 
-	public Person savePerson(Person p) {
-		em.persist(p);
-		return p;
-	}
-
 	// ------ Run ------
 	public void addRun(String personId, String type, String date,
 			Collection<String> lapIds) {
@@ -71,25 +66,33 @@ public class TestSessionBean {
 		em.persist(r);
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Run> getRuns() {
-		return (List<Run>) em.createQuery("SELECT a FROM Run a")
-				.getResultList();
-	}
-
 	public List<Run> getRunsByPersonId(String personId) {
 		Person person = em.find(Person.class, Long.parseLong(personId));
-		return (List<Run>) person.getRuns();
+		List<Run> list = (List<Run>) person.getRuns();
+		return list;
 	}
 
-	public void deleteRun(Run r) {
-		r = em.merge(r);
+	public boolean updateRun(String id, String type, String date) {
+		Run r = em.find(Run.class, Long.parseLong(id));
+		if (r != null) {
+			r.setType(type);
+			r.setDate(date);
+			em.merge(r);
+			return true;
+		}
+		return false;
+	}
+
+	public void deleteRun(String id) {
+		System.out.println("runid " + id);
+		Run r = em.find(Run.class, Long.parseLong(id));
+		Long personId = r.getPerson().getId();
+		System.out.println("personId " + personId);
+		Person person = em.find(Person.class, personId);
+		System.out.println("runs size " + person.getRuns().size());
+		person.getRuns().remove(r);
+		System.out.println("runs size " + person.getRuns().size());
 		em.remove(r);
-	}
-
-	public Run saveRun(Run r) {
-		em.persist(r);
-		return r;
 	}
 
 	// ------ Lap ------
@@ -101,10 +104,34 @@ public class TestSessionBean {
 		em.persist(l);
 	}
 
-	@SuppressWarnings("unchecked")
-	public List<Lap> getLaps() {
-		return (List<Lap>) em.createQuery(
-				"SELECT a FROM Lap a WHERE a.run IS NULL").getResultList();
+	public boolean addLapToRun(String runId, String number, String distance,
+			String time) {
+		Run r = em.find(Run.class, Long.parseLong(runId));
+		if (r != null) {
+			Lap l = new Lap();
+			l.setNumber(Integer.parseInt(number));
+			l.setDistanceM(Integer.parseInt(distance));
+			l.setTimeS(Integer.parseInt(time));
+			l.setRun(r);
+			em.merge(l);
+
+			r.addLap(l);
+			return true;
+		}
+		return false;
+	}
+
+	public boolean updateLap(String id, String number, String distance,
+			String time) {
+		Lap l = em.find(Lap.class, Long.parseLong(id));
+		if (l != null) {
+			l.setNumber(Integer.parseInt(number));
+			l.setDistanceM(Integer.parseInt(distance));
+			l.setTimeS(Integer.parseInt(time));
+			em.merge(l);
+			return true;
+		}
+		return false;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -113,14 +140,16 @@ public class TestSessionBean {
 				"SELECT a FROM Lap a WHERE a.run IS NULL").getResultList();
 	}
 
-	public void deleteLap(Lap l) {
-		l = em.merge(l);
+	public void deleteLap(String id) {
+		Lap l = em.find(Lap.class, Long.parseLong(id));
 		em.remove(l);
-	}
-
-	public Lap saveLap(Lap l) {
-		em.persist(l);
-		return l;
+		Run r = em.find(Run.class, l.getRun().getId());
+		Person p = em.find(Person.class, r.getPerson().getId());
+		r.getLaps().remove(l);
+		p.getRuns().remove(r);
+		if (r.getLaps().size() > 0) {
+			p.addRun(r);
+		}
 	}
 
 }

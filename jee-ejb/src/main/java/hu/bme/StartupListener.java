@@ -50,6 +50,8 @@ public class StartupListener {
 			r.setType("longrun");
 			r.setLaps(new ArrayList<Lap>(Arrays.asList(l1, l2)));
 			
+			p1.addRun(r);
+			
 			em.persist(l1);
 			em.persist(l2);
 			em.persist(r);

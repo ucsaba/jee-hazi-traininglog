@@ -10,9 +10,7 @@ import javax.persistence.ManyToOne;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-@ToString
 @Entity
 public class Lap implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -77,4 +75,5 @@ public class Lap implements Serializable {
 		return true;
 	}
     
+
 }

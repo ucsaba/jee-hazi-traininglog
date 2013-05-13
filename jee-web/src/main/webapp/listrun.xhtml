@@ -35,7 +35,7 @@
 			styleClass="Table" headerClass="TableHeader"
 			rowClasses="TableOddRow,TableEvenRow">
 			<h:column>
-				<f:facet name="header">id</f:facet>    				
+				<f:facet name="header">id</f:facet>  			
       			#{run.id}
 	   		</h:column>
 			<h:column>
@@ -66,10 +66,22 @@
 						<f:facet name="header">time</f:facet>
 				     	#{lap.timeS}
 				   	</h:column>
+					<h:column>
+						<h:link outcome="editLap" value="Edit">
+							<f:param name="lapId" value="#{lap.id}" />
+							<f:param name="lapNumber" value="#{lap.number}" />
+							<f:param name="lapDistance" value="#{lap.distanceM}" />
+							<f:param name="lapTime" value="#{lap.timeS}" />
+						</h:link>
+					</h:column>
 				</h:dataTable>
 			</h:column>
 			<h:column>
-				<a href="./editrun.xhtml">edit</a>
+				<h:link outcome="editRun" value="Edit">
+					<f:param name="runId" value="#{run.id}" />
+					<f:param name="runType" value="#{run.type}" />
+					<f:param name="runDate" value="#{run.date}" />
+				</h:link>
 			</h:column>
 		</h:dataTable>
 		<h3>Add run</h3>
@@ -87,7 +99,7 @@
 				<td><h:inputText size="20" value="#{testManagedBean.type}" /></td>
 			</tr>
 			<tr>
-				<td>Date:</td>
+				<td>Date (yyyy-mm-dd):</td>
 				<td><h:inputText size="5" value="#{testManagedBean.date}" /></td>
 			</tr>
 			<tr>
@@ -99,10 +111,10 @@
 					</h:selectManyMenu></td>
 				<td>New lap:</td>
 				<td>Number: <h:inputText value="#{testManagedBean.number}" />
-					<br /> Distance: <h:inputText value="#{testManagedBean.distance}" />
-					<br /> Time:<h:inputText value="#{testManagedBean.time}" /> <br />
-					<h:commandButton value="Submit" action="#{testManagedBean.doLap}"
-						ajax="false" />
+					<br /> Distance (m): <h:inputText
+						value="#{testManagedBean.distance}" /> <br /> Time (sec):<h:inputText
+						value="#{testManagedBean.time}" /> <br /> <h:commandButton
+						value="Submit" action="#{testManagedBean.doLap}" ajax="false" />
 				</td>
 			</tr>
 			<tr>

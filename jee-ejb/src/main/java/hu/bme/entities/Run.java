@@ -13,10 +13,7 @@ import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-//@EqualsAndHashCode
-@ToString
 @Entity
 public class Run implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -79,4 +76,10 @@ public class Run implements Serializable {
 		return true;
 	}
 
+	@Override
+	public String toString() {
+		return "Run [id=" + id + ", type=" + type + ", date=" + date
+				+ ", person=" + person + ", laps=" + laps.size() + "]";
+	}
+	
 }

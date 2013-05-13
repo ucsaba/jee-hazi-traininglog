@@ -5,9 +5,31 @@
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
 <h:head>
-	<title>FutárEE</title>
+	<title>Training logs - edit run</title>
 </h:head>
 <h:body>
-Üres.
+	<h:form>
+		<h:messages globalOnly="true" styleClass="Message" />
+		<h1>Edit run:</h1>
+		<h:outputLabel value="Run id:" for="runId" />
+		<h:inputText id="runId" value="#{runBean.id}" readonly="false" />
+		<br />
+		<h:outputLabel value="Run type:" for="runType" />
+		<h:inputText id="runType" value="#{runBean.type}" readonly="false" />
+		<br />
+		<h:outputLabel value="Run date (yyyy-mm-dd):" for="runDate" />
+		<h:inputText id="runDate" value="#{runBean.date}" readonly="false" />
+		<br />
+		Add lap:
+		<br />
+		Number: <h:inputText value="#{runBean.lapNumber}" />
+		<br /> 
+		Distance (m): <h:inputText value="#{runBean.lapDistance}" />
+		<br />
+		Time (sec):<h:inputText value="#{runBean.lapTime}" />
+		<br />
+		<h:commandButton value="Save" action="#{runBean.edit()}" />
+		<h:commandButton value="Delete" action="#{runBean.delete()}" />
+	</h:form>
 </h:body>
 </html>

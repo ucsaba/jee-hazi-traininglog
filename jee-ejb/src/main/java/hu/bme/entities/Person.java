@@ -12,10 +12,7 @@ import javax.persistence.OneToMany;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-//@EqualsAndHashCode
-@ToString
 @Entity
 public class Person implements Serializable {
 	private static final long serialVersionUID = 1L;
@@ -65,6 +62,11 @@ public class Person implements Serializable {
 		} else if (!name.equals(other.name))
 			return false;
 		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "Person [id=" + id + ", name=" + name + ", runs=" + runs.size() + "]";
 	}
 	
 	
