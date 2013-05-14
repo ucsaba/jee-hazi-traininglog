@@ -1,8 +1,6 @@
 package hu.bme;
 
 import java.io.Serializable;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
@@ -20,7 +18,7 @@ public class LapBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	@Getter @Setter private TestSessionBean testSessionBean;
+	@Getter @Setter private SessionBean sessionBean;
 
 	@ManagedProperty("#{param.lapId}")
 	@Getter @Setter private String id;
@@ -34,7 +32,7 @@ public class LapBean implements Serializable {
 	public String edit() {
 		System.out.println(id + " " + number + " " + distance + " " + time);
 
-		if (!testSessionBean.updateLap(id, number, distance, time)) {
+		if (!sessionBean.updateLap(id, number, distance, time)) {
 			FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "There is no run with id " + id, null));
 			return null;
 		}
@@ -42,7 +40,7 @@ public class LapBean implements Serializable {
 	}
 	
 	public String delete() {
-		testSessionBean.deleteLap(id);
+		sessionBean.deleteLap(id);
         return "edited";
 	}
 

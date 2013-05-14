@@ -20,7 +20,7 @@ public class RunBean implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	@EJB
-	@Getter	@Setter	private TestSessionBean testSessionBean;
+	@Getter	@Setter	private SessionBean sessionBean;
 	
 	@ManagedProperty("#{param.runId}")
 	@Getter @Setter private String id;
@@ -42,7 +42,7 @@ public class RunBean implements Serializable {
 		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		try {
 			df.parse(date);
-			if(!testSessionBean.updateRun(id, type, date)) {
+			if(!sessionBean.updateRun(id, type, date)) {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "There is no run with id " + id, null));
 				return null;
 			}
@@ -50,7 +50,7 @@ public class RunBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Some \"Add lap\" fields are empty", null));
 			}
 			else {
-				testSessionBean.addLapToRun(id, lapNumber, lapDistance, lapTime);
+				sessionBean.addLapToRun(id, lapNumber, lapDistance, lapTime);
 			}
 	        return "edited";
 		} catch (ParseException e) {
@@ -60,7 +60,7 @@ public class RunBean implements Serializable {
     }
 	
 	public String delete() {
-		testSessionBean.deleteRun(id);
+		sessionBean.deleteRun(id);
         return "edited";
 	}
 }
