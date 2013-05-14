@@ -27,34 +27,29 @@ public class StartupListener {
 
 			Person p1 = new Person();
 			p1.setName("person1");
-			
-			// Person p2 = new Person();
-			// p2.setName("person2");
-			// em.persist(p2);
+			em.persist(p1);
 
+			Run r = new Run();
+			r.setPerson(p1);
+			r.setDate("2013-05-07");
+			r.setType("longrun");
+			em.persist(r);
+			
 			Lap l1 = new Lap();
 			l1.setNumber(1);
 			l1.setDistanceM(3000);
 			l1.setTimeS(900);
+			l1.setRun(r);
+			em.persist(l1);
 
 			Lap l2 = new Lap();
 			l2.setNumber(2);
 			l2.setDistanceM(2500);
 			l2.setTimeS(700);
-
-			Run r = new Run();
-			r.setId(p1.getId());
-			r.setPerson(p1);
-			r.setDate("2013-05-07");
-			r.setType("longrun");
-			r.setLaps(new ArrayList<Lap>(Arrays.asList(l1, l2)));
-			
-			p1.addRun(r);
-			
-			em.persist(l1);
+			l2.setRun(r);
 			em.persist(l2);
-			em.persist(r);
-			em.persist(p1);
+			
+			r.setLaps(new ArrayList<Lap>(Arrays.asList(l1, l2)));
 		}
 	}
 }

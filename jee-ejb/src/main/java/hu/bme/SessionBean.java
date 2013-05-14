@@ -12,6 +12,7 @@ import javax.ejb.LocalBean;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 @Stateless
 @LocalBean
@@ -24,13 +25,18 @@ public class SessionBean {
 	public void addPerson(String name) {
 		Person p = new Person();
 		p.setName(name);
+		System.out.println("addPerson id " + p.getId());
 		em.persist(p);
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Person> getPersons() {
-		return (List<Person>) em.createQuery("SELECT a FROM Person a")
+		List<Person> list = (List<Person>) em.createQuery("SELECT a FROM Person a")
 				.getResultList();
+		for(Person p : list) {
+			System.out.println("getPersons id " + p.getId());
+		}
+		return list;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -70,6 +76,21 @@ public class SessionBean {
 		Person person = em.find(Person.class, Long.parseLong(personId));
 		List<Run> list = (List<Run>) person.getRuns();
 		return list;
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Run> getRunsByPersonIdAndDate(String personId, String date) {
+		System.out.println("getRunsByPersonIdAndDate " + personId +" " + date);
+		
+		Query query = em.createQuery(
+				"SELECT a FROM Run a WHERE a.person.id=:personId and a.date=:date");
+		query.setParameter("personId", Long.parseLong(personId));
+		query.setParameter("date", date);
+        List<Run> results = (List<Run>)query.getResultList();
+        
+        System.out.println("getRunsByPersonIdAndDate list.size " + results.size());
+        
+		return results;
 	}
 
 	public boolean updateRun(String id, String type, String date) {

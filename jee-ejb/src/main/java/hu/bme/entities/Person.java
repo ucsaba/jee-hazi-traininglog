@@ -69,5 +69,4 @@ public class Person implements Serializable {
 		return "Person [id=" + id + ", name=" + name + ", runs=" + runs.size() + "]";
 	}
 	
-	
 }

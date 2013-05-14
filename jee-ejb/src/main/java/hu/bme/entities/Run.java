@@ -10,6 +10,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.xml.bind.annotation.XmlTransient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -24,8 +25,8 @@ public class Run implements Serializable {
 	@Getter @Setter private String date;
 
 	@ManyToOne
-	@Getter private Person person;
-	
+	private Person person;
+
 	@OneToMany(mappedBy="run", cascade={CascadeType.ALL}, orphanRemoval=true)
 	@Getter @Setter private Collection<Lap> laps;
 
@@ -34,6 +35,11 @@ public class Run implements Serializable {
         if (person.getRuns() != null && !person.getRuns().contains(this)) {
         	person.getRuns().add(this);
         }
+	}
+	
+	@XmlTransient
+	public Person getPerson() {
+		return person;
 	}
 	
 	public void addLap(Lap lap) {
@@ -81,5 +87,5 @@ public class Run implements Serializable {
 		return "Run [id=" + id + ", type=" + type + ", date=" + date
 				+ ", person=" + person + ", laps=" + laps.size() + "]";
 	}
-	
+
 }

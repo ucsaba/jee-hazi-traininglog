@@ -92,5 +92,5 @@ public class MainManagedBean implements Serializable {
 	private void showErrorMessage(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
 	}
-	
+
 }

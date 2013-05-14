@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.xml.bind.annotation.XmlTransient;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -14,21 +15,27 @@ import lombok.Setter;
 @Entity
 public class Lap implements Serializable {
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Getter @Setter private Long id;
     @Getter @Setter private Integer number;
     @Getter @Setter private Integer distanceM;
     @Getter @Setter private Integer timeS;
-
+    
     @ManyToOne
-    @Getter private Run run;
+    private Run run;
 
     public void setRun(Run run) {
 		this.run = run;
         if (run.getLaps() != null && !run.getLaps().contains(this)) {
         	run.getLaps().add(this);
         }
+	}
+
+    @XmlTransient
+    public Run getRun() {
+		return run;
 	}
     
 	@Override
@@ -74,6 +81,5 @@ public class Lap implements Serializable {
 			return false;
 		return true;
 	}
-    
 
 }
