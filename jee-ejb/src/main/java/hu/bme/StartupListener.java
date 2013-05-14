@@ -28,7 +28,6 @@ public class StartupListener {
 			Person p1 = new Person();
 			p1.setName("person1");
 			
-
 			// Person p2 = new Person();
 			// p2.setName("person2");
 			// em.persist(p2);

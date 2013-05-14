@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
 
 @Stateless
 @LocalBean
-public class TestSessionBean {
+public class SessionBean {
 
 	@PersistenceContext
 	EntityManager em;
