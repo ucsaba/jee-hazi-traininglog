@@ -1,0 +1,41 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:outputStylesheet library="css" name="style.css" />
+<h:head>
+	<title>Training logs</title>
+</h:head>
+<h:body rendered="#{mrBean.isAdmin()}">
+	<h:form>
+		<h1>Manage users</h1>
+
+		<h3>Delete user</h3>
+		<h:selectOneMenu id="selectedPerson"
+			value="#{mainManagedBean.personId}">
+			<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
+				value="#{mainManagedBean.sessionBean.persons}" var="person" />
+		</h:selectOneMenu>
+		<h:commandButton value="Delete"
+			action="#{mainManagedBean.deletePerson}" />
+
+		<h3>Add user</h3>
+		Name: <h:inputText value="#{mainManagedBean.name}" />
+		<br />
+		Password: <h:inputText value="#{mainManagedBean.pwd}" />
+		<br />
+		<h:commandButton value="Submit" action="#{mainManagedBean.doPerson}" />
+		<br />
+		<br />
+		<h:messages globalOnly="true" styleClass="Message" />
+		<h:link value="Main page" outcome="listrun" />
+	</h:form>
+</h:body>
+<h:body rendered="!#{mrBean.isAdmin()}">
+	<h1>Access denied!</h1>
+	<h:link value="Login page" outcome="loginpage" />
+</h:body>
+</html>

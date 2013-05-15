@@ -9,29 +9,22 @@
 <h:head>
 	<title>Training logs</title>
 </h:head>
-<h:body>
+<h:body rendered="#{mrBean.isLoggedIn()}">
 	<h:form>
 		<h:messages globalOnly="true" styleClass="Message" />
-		<h3>Person:</h3>
-		<table>
-			<tr>
-				<td><h:selectOneMenu id="selectedPerson"
-						value="#{mainManagedBean.personId}">
-						<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
-							value="#{mainManagedBean.sessionBean.persons}" var="person" />
-					</h:selectOneMenu> <h:commandButton value="Submit">
-						<f:ajax execute="selectedPerson" render="runTable" />
-					</h:commandButton></td>
-				<td>New person: <br /> Name:<h:inputText
-						value="#{mainManagedBean.name}" /> <h:commandButton
-						value="Submit" action="#{mainManagedBean.doPerson}" />
-				</td>
-			</tr>
-		</table>
-
+		<h1>#{mrBean.userName}:</h1>
+		
+		<h3>Edit user</h3>
+		Name: <h:inputText value="#{mainManagedBean.name}" />
+		<br />
+		Password: <h:inputText value="#{mainManagedBean.pwd}" />
+		<br />
+		<h:commandButton value="Save" action="#{mainManagedBean.editPerson}" />
+		<br />
+		
 		<h3>Runs:</h3>
 		<h:dataTable id="runTable"
-			value="#{mainManagedBean.getRunsByPersonId()}" var="run"
+			value="#{mainManagedBean.getRunsByPersonId(mrBean.id)}" var="run"
 			styleClass="Table" headerClass="TableHeader"
 			rowClasses="TableOddRow,TableEvenRow">
 			<h:column>
@@ -88,13 +81,6 @@
 		<hr />
 		<table>
 			<tr>
-				<td>Person:</td>
-				<td><h:selectOneMenu value="#{mainManagedBean.personId}">
-						<f:selectItems itemValue="#{person.id}" itemLabel="#{person.name}"
-							value="#{mainManagedBean.sessionBean.persons}" var="person" />
-					</h:selectOneMenu></td>
-			</tr>
-			<tr>
 				<td>Type:</td>
 				<td><h:inputText size="20" value="#{mainManagedBean.type}" /></td>
 			</tr>
@@ -106,8 +92,7 @@
 				<td>Laps:</td>
 				<td><h:selectManyMenu value="#{mainManagedBean.chosenLaps}">
 						<f:selectItems itemValue="#{lap.id}" itemLabel="#{lap.id}"
-							value="#{mainManagedBean.sessionBean.getOrphanLaps()}"
-							var="lap" />
+							value="#{mainManagedBean.sessionBean.getOrphanLaps()}" var="lap" />
 					</h:selectManyMenu></td>
 				<td>New lap:</td>
 				<td>Number: <h:inputText value="#{mainManagedBean.number}" />
@@ -123,7 +108,12 @@
 						action="#{mainManagedBean.doRun}" /></td>
 			</tr>
 		</table>
+		<h:commandButton value="Log out" action="#{mrBean.logout()}" />
 		<h:messages globalOnly="true" styleClass="Message" />
 	</h:form>
+</h:body>
+<h:body rendered="#{!mrBean.isLoggedIn()}">
+	<h1>Access denied!</h1>
+	<h:link value="Login page" outcome="loginpage" />
 </h:body>
 </html>

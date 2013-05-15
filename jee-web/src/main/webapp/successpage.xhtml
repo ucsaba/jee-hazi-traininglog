@@ -1,0 +1,25 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<h:outputStylesheet library="css" name="style.css" />
+<h:head>
+	<title>Training logs</title>
+</h:head>
+<h:body rendered="#{mrBean.isLoggedIn()}">
+	<h:form>
+		<h1>Login succeeded!</h1>
+		<h:link value="Main page" outcome="listrun" />
+		<br />
+		<h:link rendered="#{mrBean.isAdmin()}" value="Manage users"
+			outcome="manageusers" />
+	</h:form>
+</h:body>
+<h:body rendered="#{!mrBean.isLoggedIn()}">
+	<h1>Access denied!</h1>
+	<h:link value="Login page" outcome="loginpage" />
+</h:body>
+</html>

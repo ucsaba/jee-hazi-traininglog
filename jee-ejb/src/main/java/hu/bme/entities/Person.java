@@ -20,6 +20,8 @@ public class Person implements Serializable {
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	@Getter @Setter private Long id;
 	@Getter @Setter private String name;
+	@Getter @Setter private String pwd;
+	@Getter @Setter private boolean isAdmin;
 
 	@OneToMany(mappedBy="person", cascade={CascadeType.ALL}, orphanRemoval=true)
 	@Getter @Setter private Collection<Run> runs;

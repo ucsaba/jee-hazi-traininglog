@@ -1,37 +1,70 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faces-config version="2.0" xmlns="http://java.sun.com/xml/ns/javaee"
-        xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-        xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
-<!--         <application> -->
-<!--                 <resource-bundle> -->
-<!--                         <base-name>hu.bme.messages</base-name> -->
-<!--                         <var>i18n</var> -->
-<!--                 </resource-bundle> -->
-<!--         </application> -->
-        
-        <navigation-rule>
-                <from-view-id>/listrun.xhtml</from-view-id>
-                <navigation-case>
-                        <from-outcome>editRun</from-outcome>
-                        <to-view-id>/editrun.xhtml</to-view-id>
-                </navigation-case>
-                <navigation-case>
-                        <from-outcome>editLap</from-outcome>
-                        <to-view-id>/editlap.xhtml</to-view-id>
-                </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-                <from-view-id>/editrun.xhtml</from-view-id>
-                <navigation-case>
-                        <from-outcome>edited</from-outcome>
-                        <to-view-id>/listrun.xhtml</to-view-id>
-                </navigation-case>
-        </navigation-rule>
-        <navigation-rule>
-                <from-view-id>/editlap.xhtml</from-view-id>
-                <navigation-case>
-                        <from-outcome>edited</from-outcome>
-                        <to-view-id>/listrun.xhtml</to-view-id>
-                </navigation-case>
-        </navigation-rule>
+	xmlns:xi="http://www.w3.org/2001/XInclude" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-facesconfig_2_0.xsd">
+	<!-- <application> -->
+	<!-- <resource-bundle> -->
+	<!-- <base-name>hu.bme.messages</base-name> -->
+	<!-- <var>i18n</var> -->
+	<!-- </resource-bundle> -->
+	<!-- </application> -->
+
+	<navigation-rule>
+		<from-view-id>/loginpage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>success</from-outcome>
+			<to-view-id>/successpage.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>fail</from-outcome>
+			<to-view-id>/failpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/successpage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>listrun</from-outcome>
+			<to-view-id>/listrun.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>manageusers</from-outcome>
+			<to-view-id>/manageusers.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/failpage.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>loginpage</from-outcome>
+			<to-view-id>/loginpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/listrun.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>editRun</from-outcome>
+			<to-view-id>/editrun.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>editLap</from-outcome>
+			<to-view-id>/editlap.xhtml</to-view-id>
+		</navigation-case>
+		<navigation-case>
+			<from-outcome>logout</from-outcome>
+			<to-view-id>/loginpage.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/editrun.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>edited</from-outcome>
+			<to-view-id>/listrun.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
+	<navigation-rule>
+		<from-view-id>/editlap.xhtml</from-view-id>
+		<navigation-case>
+			<from-outcome>edited</from-outcome>
+			<to-view-id>/listrun.xhtml</to-view-id>
+		</navigation-case>
+	</navigation-rule>
 </faces-config>

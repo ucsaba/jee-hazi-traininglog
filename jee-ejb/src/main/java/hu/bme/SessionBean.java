@@ -22,18 +22,25 @@ public class SessionBean {
 	EntityManager em;
 
 	// ------ Person ------
-	public void addPerson(String name) {
+	public boolean addPerson(String name, String pwd) {
+		for (Person p : getPersons()) {
+			if (p.getName().equals(name)) {
+				return false;
+			}
+		}
 		Person p = new Person();
 		p.setName(name);
+		p.setPwd(pwd);
 		System.out.println("addPerson id " + p.getId());
 		em.persist(p);
+		return true;
 	}
 
 	@SuppressWarnings("unchecked")
 	public List<Person> getPersons() {
-		List<Person> list = (List<Person>) em.createQuery("SELECT a FROM Person a")
-				.getResultList();
-		for(Person p : list) {
+		List<Person> list = (List<Person>) em.createQuery(
+				"SELECT a FROM Person a").getResultList();
+		for (Person p : list) {
 			System.out.println("getPersons id " + p.getId());
 		}
 		return list;
@@ -46,9 +53,33 @@ public class SessionBean {
 				.setMaxResults(1).getResultList()).get(0);
 	}
 
-	public void deletePerson(Person p) {
-		p = em.merge(p);
+	public void deletePerson(String id) {
+		Person p = em.find(Person.class, Long.parseLong(id));
 		em.remove(p);
+	}
+
+	public boolean updatePerson(String id, String name, String pwd) {
+		Person person = em.find(Person.class, Long.parseLong(id));
+		if (person != null) {
+			person.setName(name);
+			person.setPwd(pwd);
+			em.merge(person);
+			return true;
+		}
+		return false;
+	}
+
+	@SuppressWarnings("unchecked")
+	public Person authPerson(String name, String pwd) {
+		Query query = em
+				.createQuery("SELECT a FROM Person a WHERE a.name=:name and a.pwd=:pwd");
+		query.setParameter("name", name);
+		query.setParameter("pwd", pwd);
+		List<Person> result = query.setMaxResults(1).getResultList();
+		if (!result.isEmpty()) {
+			return result.get(0);
+		}
+		return null;
 	}
 
 	// ------ Run ------
@@ -80,16 +111,17 @@ public class SessionBean {
 
 	@SuppressWarnings("unchecked")
 	public List<Run> getRunsByPersonIdAndDate(String personId, String date) {
-		System.out.println("getRunsByPersonIdAndDate " + personId +" " + date);
-		
-		Query query = em.createQuery(
-				"SELECT a FROM Run a WHERE a.person.id=:personId and a.date=:date");
+		System.out.println("getRunsByPersonIdAndDate " + personId + " " + date);
+
+		Query query = em
+				.createQuery("SELECT a FROM Run a WHERE a.person.id=:personId and a.date=:date");
 		query.setParameter("personId", Long.parseLong(personId));
 		query.setParameter("date", date);
-        List<Run> results = (List<Run>)query.getResultList();
-        
-        System.out.println("getRunsByPersonIdAndDate list.size " + results.size());
-        
+		List<Run> results = (List<Run>) query.getResultList();
+
+		System.out.println("getRunsByPersonIdAndDate list.size "
+				+ results.size());
+
 		return results;
 	}
 

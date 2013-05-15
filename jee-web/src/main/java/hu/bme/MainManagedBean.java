@@ -26,6 +26,7 @@ public class MainManagedBean implements Serializable {
 
 	// ----- Person -----
 	@Getter	@Setter	private String name;
+	@Getter	@Setter	private String pwd;
 	@Getter @Setter	private Collection<Run> runs;
 
 	// ----- Run -----
@@ -46,13 +47,19 @@ public class MainManagedBean implements Serializable {
 		}
 		return null;
 	}
+	
+	public Collection<Run> getRunsByPersonId(String pid) {
+		return sessionBean.getRunsByPersonId(pid);
+	}
 
 	public String doPerson() {
 		if (name == null || name.isEmpty()) {
 			showErrorMessage("Name is null or empty");
 		}
 		else {
-			sessionBean.addPerson(name);
+			if(!sessionBean.addPerson(name, pwd)) {
+				showErrorMessage("Username already exists");
+			}
 		}
 		return null;
 	}
@@ -89,8 +96,18 @@ public class MainManagedBean implements Serializable {
 		return null;
 	}
 	
+	public void deletePerson() {
+		sessionBean.deletePerson(personId);
+	}
+	
+	public void editPerson() {
+		if(!sessionBean.updatePerson(personId, name, pwd)) {
+			showErrorMessage("Username already exists");
+		}
+	}
+
 	private void showErrorMessage(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
 	}
-
+	
 }

@@ -24,9 +24,16 @@ public class StartupListener {
 	public void onStartup() {
 		if (em.createQuery("SELECT a FROM Person a").setMaxResults(1)
 				.getResultList().isEmpty()) {
-
+			Person admin = new Person();
+			admin.setName("admin");
+			admin.setPwd("admin");
+			admin.setAdmin(true);
+			em.persist(admin);
+			
 			Person p1 = new Person();
 			p1.setName("person1");
+			p1.setPwd("jelszo");
+			p1.setAdmin(false);
 			em.persist(p1);
 
 			Run r = new Run();
