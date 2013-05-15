@@ -5,8 +5,10 @@ import hu.bme.entities.Person;
 import java.io.Serializable;
 
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
+import javax.faces.context.FacesContext;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -36,6 +38,9 @@ public class MrBean implements Serializable {
 			password = p.getPwd();
 			isAdmin = p.isAdmin();
 			isLoggedIn = true;
+
+			System.out.println("login "+ id + " " + userName + " " + password);
+			
 			return "success";
 		}
 		
@@ -55,5 +60,11 @@ public class MrBean implements Serializable {
 		return "logout";
 	}
 
+	public void editPerson() {
+		if(!sessionBean.updatePerson(id, userName, password)) {
+			FacesContext.getCurrentInstance().addMessage(
+					null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Username already exists", null));
+		}
+	}
 	
 }

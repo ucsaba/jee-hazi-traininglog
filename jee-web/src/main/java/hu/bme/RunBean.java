@@ -46,10 +46,7 @@ public class RunBean implements Serializable {
 				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "There is no run with id " + id, null));
 				return null;
 			}
-			if(lapNumber.isEmpty() || lapDistance.isEmpty() || lapTime.isEmpty()) {
-				FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "Some \"Add lap\" fields are empty", null));
-			}
-			else {
+			if(lapNumber != null && lapDistance != null && lapTime != null) {
 				sessionBean.addLapToRun(id, lapNumber, lapDistance, lapTime);
 			}
 	        return "edited";

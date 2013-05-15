@@ -23,9 +23,19 @@
 			action="#{mainManagedBean.deletePerson}" />
 
 		<h3>Add user</h3>
-		Name: <h:inputText value="#{mainManagedBean.name}" />
+		Username: <h:inputText id="name" value="#{mainManagedBean.name}"
+			required="true" requiredMessage="Required"
+			validatorMessage="Username length: min 5 max 50!">
+			<f:validateLength minimum="5" maximum="50" />
+		</h:inputText>
+		<h:messages for="name" styleClass="Message" />
 		<br />
-		Password: <h:inputText value="#{mainManagedBean.pwd}" />
+		Password: <h:inputText id="pwd" value="#{mainManagedBean.pwd}"
+			required="true" requiredMessage="Required"
+			validatorMessage="Password length: min 5 max 50!">
+			<f:validateLength minimum="5" maximum="50" />
+		</h:inputText>
+		<h:messages for="pwd" styleClass="Message" />
 		<br />
 		<h:commandButton value="Submit" action="#{mainManagedBean.doPerson}" />
 		<br />

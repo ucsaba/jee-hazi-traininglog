@@ -10,19 +10,30 @@
 <h:body>
 	<h:form>
 		<h:messages globalOnly="true" styleClass="Message" />
-		<h1>Edit run:</h1>
+		<h1>Edit lap:</h1>
 		<h:outputLabel value="Lap id:" for="lapId" />
-		<h:inputText id="lapId" value="#{lapBean.id}" readonly="false" />
+		<h:inputText id="lapId" value="#{lapBean.id}" readonly="false"
+			validatorMessage="Lap number must be integer!">
+			<f:convertNumber integerOnly="true" />
+		</h:inputText>
+		<h:messages for="lapId" styleClass="Message" />
 		<br />
 		<h:outputLabel value="Lap number:" for="lapNumber" />
 		<h:inputText id="lapNumber" value="#{lapBean.number}" readonly="false" />
 		<br />
 		<h:outputLabel value="Lap distance (m):" for="lapDistance" />
 		<h:inputText id="lapDistance" value="#{lapBean.distance}"
-			readonly="false" />
+			readonly="false" validatorMessage="Distance must be integer!">
+			<f:convertNumber integerOnly="true" />
+		</h:inputText>
+		<h:messages for="lapDistance" styleClass="Message" />
 		<br />
 		<h:outputLabel value="Lap time (sec):" for="lapTime" />
-		<h:inputText id="lapTime" value="#{lapBean.time}" readonly="false" />
+		<h:inputText id="lapTime" value="#{lapBean.time}" readonly="false"
+			validatorMessage="Time must be integer!">
+			<f:convertNumber integerOnly="true" />
+		</h:inputText>
+		<h:messages for="lapTime" styleClass="Message" />
 		<br />
 		<h:commandButton value="Save" action="#{lapBean.edit()}" />
 		<h:commandButton value="Delete" action="#{lapBean.delete()}" />

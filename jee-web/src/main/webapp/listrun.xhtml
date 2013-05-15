@@ -13,15 +13,23 @@
 	<h:form>
 		<h:messages globalOnly="true" styleClass="Message" />
 		<h1>#{mrBean.userName}:</h1>
-		
+
 		<h3>Edit user</h3>
-		Name: <h:inputText value="#{mainManagedBean.name}" />
+		Name: <h:inputText id="name" value="#{mrBean.userName}"
+			required="false" validatorMessage="Username length: min 5 max 50!">
+			<f:validateLength minimum="5" maximum="50" />
+		</h:inputText>
+		<h:messages for="name" styleClass="Message" />
 		<br />
-		Password: <h:inputText value="#{mainManagedBean.pwd}" />
+		Password: <h:inputText id="pwd" value="#{mrBean.password}"
+			validatorMessage="Password length: min 5 max 50!">
+			<f:validateLength minimum="5" maximum="50" />
+		</h:inputText>
+		<h:messages for="pwd" styleClass="Message" />
 		<br />
-		<h:commandButton value="Save" action="#{mainManagedBean.editPerson}" />
+		<h:commandButton value="Save" action="#{mrBean.editPerson}" />
 		<br />
-		
+
 		<h3>Runs:</h3>
 		<h:dataTable id="runTable"
 			value="#{mainManagedBean.getRunsByPersonId(mrBean.id)}" var="run"
@@ -77,16 +85,27 @@
 				</h:link>
 			</h:column>
 		</h:dataTable>
+	</h:form>
+
+	<h:form>
 		<h3>Add run</h3>
 		<hr />
 		<table>
 			<tr>
 				<td>Type:</td>
-				<td><h:inputText size="20" value="#{mainManagedBean.type}" /></td>
+				<td><h:inputText id="runtype" size="20"
+						value="#{mainManagedBean.type}"
+						validatorMessage="Run type length: min 5 max 50!">
+						<f:validateLength minimum="5" maximum="50" />
+					</h:inputText> <h:messages for="runtype" styleClass="Message" /></td>
 			</tr>
 			<tr>
 				<td>Date (yyyy-mm-dd):</td>
-				<td><h:inputText size="5" value="#{mainManagedBean.date}" /></td>
+				<td><h:inputText id="rundate" size="5"
+						value="#{mainManagedBean.date}"
+						validatorMessage="Pattern of run date must be yyyy-mm-dd!">
+						<f:convertDateTime pattern="yyyy-MM-dd" />
+					</h:inputText> <h:messages for="rundate" styleClass="Message" /></td>
 			</tr>
 			<tr>
 				<td>Laps:</td>
@@ -95,10 +114,21 @@
 							value="#{mainManagedBean.sessionBean.getOrphanLaps()}" var="lap" />
 					</h:selectManyMenu></td>
 				<td>New lap:</td>
-				<td>Number: <h:inputText value="#{mainManagedBean.number}" />
-					<br /> Distance (m): <h:inputText
-						value="#{mainManagedBean.distance}" /> <br /> Time (sec):<h:inputText
-						value="#{mainManagedBean.time}" /> <br /> <h:commandButton
+				<td>Number: <h:inputText id="lapnumber"
+						value="#{mainManagedBean.number}"
+						validatorMessage="Lap number must be integer!">
+						<f:convertNumber integerOnly="true" />
+					</h:inputText> <h:messages for="lapnumber" styleClass="Message" /> <br />
+					Distance (m): <h:inputText id="lapdistance"
+						value="#{mainManagedBean.distance}"
+						validatorMessage="Distance must be integer!">
+						<f:convertNumber integerOnly="true" />
+					</h:inputText> <h:messages for="lapdistance" styleClass="Message" /> <br />
+					Time (sec):<h:inputText id="laptime"
+						value="#{mainManagedBean.time}"
+						validatorMessage="Time must be integer!">
+						<f:convertNumber integerOnly="true" />
+					</h:inputText> <h:messages for="laptime" styleClass="Message" /> <br /> <h:commandButton
 						value="Submit" action="#{mainManagedBean.doLap}" ajax="false" />
 				</td>
 			</tr>

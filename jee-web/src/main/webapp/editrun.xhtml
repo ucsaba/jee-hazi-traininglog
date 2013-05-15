@@ -11,22 +11,45 @@
 	<h:form>
 		<h:messages globalOnly="true" styleClass="Message" />
 		<h1>Edit run:</h1>
-		<h:outputLabel value="Run id:" for="runId" />
-		<h:inputText id="runId" value="#{runBean.id}" readonly="false" />
+		<div hidden="true">
+			<h:inputText id="runId" value="#{runBean.id}" readonly="false" />
+		</div>
 		<br />
 		<h:outputLabel value="Run type:" for="runType" />
-		<h:inputText id="runType" value="#{runBean.type}" readonly="false" />
+		<h:inputText id="runType" value="#{runBean.type}" readonly="false"
+			validatorMessage="Run type length: min 5 max 50!">
+			<f:validateLength minimum="5" maximum="50" />
+		</h:inputText>
+		<h:messages for="runType" styleClass="Message" />
 		<br />
 		<h:outputLabel value="Run date (yyyy-mm-dd):" for="runDate" />
-		<h:inputText id="runDate" value="#{runBean.date}" readonly="false" />
+		<h:inputText id="runDate" value="#{runBean.date}" readonly="false"
+			validatorMessage="Pattern of run date must be yyyy-mm-dd!">
+
+		</h:inputText>
+		<h:messages for="runDate" styleClass="Message" />
 		<br />
-		Add lap:
+
+		<h3>Add lap:</h3>
 		<br />
-		Number: <h:inputText value="#{runBean.lapNumber}" />
+		Number: <h:inputText id="lapnumber" value="#{runBean.lapNumber}"
+			validatorMessage="Lap number must be integer!">
+			<f:convertNumber integerOnly="true" />
+		</h:inputText>
+		<h:messages for="lapnumber" styleClass="Message" />
 		<br /> 
-		Distance (m): <h:inputText value="#{runBean.lapDistance}" />
+		Distance (m): <h:inputText id="lapdistance"
+			value="#{runBean.lapDistance}"
+			validatorMessage="Distance must be integer!">
+			<f:convertNumber integerOnly="true" />
+		</h:inputText>
+		<h:messages for="lapdistance" styleClass="Message" />
 		<br />
-		Time (sec):<h:inputText value="#{runBean.lapTime}" />
+		Time (sec):<h:inputText id="laptime" value="#{runBean.lapTime}"
+			validatorMessage="Time must be integer!">
+			<f:convertNumber integerOnly="true" />
+		</h:inputText>
+		<h:messages for="laptime" styleClass="Message" />
 		<br />
 		<h:commandButton value="Save" action="#{runBean.edit()}" />
 		<h:commandButton value="Delete" action="#{runBean.delete()}" />

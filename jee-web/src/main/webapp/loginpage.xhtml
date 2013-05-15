@@ -14,11 +14,19 @@
 		<table>
 			<tr>
 				<td>Username:</td>
-				<td><h:inputText size="25" value="#{mrBean.userName}" /></td>
+				<td><h:inputText size="25" value="#{mrBean.userName}"
+						required="true" requiredMessage="Username required"
+						validatorMessage="Username length: min 5 max 50!">
+						<f:validateLength minimum="5" maximum="50" />
+					</h:inputText></td>
 			</tr>
 			<tr>
 				<td>Password:</td>
-				<td><h:inputText size="25" value="#{mrBean.password}" /></td>
+				<td><h:inputText size="25" value="#{mrBean.password}"
+						required="true" requiredMessage="Password required"
+						validatorMessage="Password length: min 5 max 50!">
+						<f:validateLength minimum="5" maximum="50" />
+					</h:inputText></td>
 			</tr>
 		</table>
 		<h:commandButton value="Log in" action="#{mrBean.login()}" />

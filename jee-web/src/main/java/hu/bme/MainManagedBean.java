@@ -49,6 +49,7 @@ public class MainManagedBean implements Serializable {
 	}
 	
 	public Collection<Run> getRunsByPersonId(String pid) {
+		personId = pid;
 		return sessionBean.getRunsByPersonId(pid);
 	}
 
@@ -100,11 +101,7 @@ public class MainManagedBean implements Serializable {
 		sessionBean.deletePerson(personId);
 	}
 	
-	public void editPerson() {
-		if(!sessionBean.updatePerson(personId, name, pwd)) {
-			showErrorMessage("Username already exists");
-		}
-	}
+	
 
 	private void showErrorMessage(String msg) {
 		FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, msg, null));
